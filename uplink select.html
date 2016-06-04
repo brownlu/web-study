@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body onload="loadData(data)">
+<div id="category"></div>
+	<script>
+
+	var data=[
+			{"id":10,"name":'男装',children:[
+												{"id":101,"name":'裤子'},
+												{"id":102,"name":'上衣'}
+			]
+		},
+		{"id":20,"name":'女装',children:[
+												{"id":201,"name":'裤子'},
+												{"id":202,"name":'上衣',"children":[
+																					{"id":2011,"name":'裤子'},
+																					{"id":2012,"name":'裤子'}
+												]}
+			]
+		},
+		{"id":30,"name":'童装',children:[
+												{"id":301,"name":'裤子'},
+												{"id":302,"name":'上衣',"children":[
+																					{"id":3011,"name":'裤子'},
+																					{"id":3012,"name":'裤子'}
+												]}
+			]
+		}
+	];
+	function loadData(data){
+		if(!data){
+			return;
+		}
+		var select=document.createElement("select");
+		var option=new Option("-请选择-",0);
+		/*var option=document.createElement("option");
+		option.value=0;
+		option.text="=请选择-";*/
+		select.add(option);
+
+		for(var i=0;i<data.length;i++){
+			var item=data[i];
+			var option=document.createElement("option");
+			option.value=item.id;
+			option.text=item.name;
+			select.add(option);
+		}
+		document.getElementById('category').appendChild(select);
+		select.onchange=function(){
+			/*console.log(select);
+			console.log(select.parentNode.lastChild);
+			while(select.parentNode.lastChild!=select){
+				select.parentNode.removeChild(select.parentNode.lastChild);
+			}
+			console.log(select.selectedIndex);*/
+			loadData(data[select.selectedIndex-1].children)//递归调用
+		}
+	}
+	</script>	
+</body>
+</html>
